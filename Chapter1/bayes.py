@@ -108,11 +108,13 @@ class Search():
         self.sep2 = random.uniform(0.2, 0.9)
         self.sep3 = random.uniform(0.2, 0.9)
 
-    def conduct_search(self, area_num, area_array, effectiveness_prob):
+    def conduct_search(self, area_num, area_array,
+                       effectiveness_prob, already_searched_coords=[]):
         """Return search results and list of searched coordinates."""
         local_y_range = range(area_array.shape[0])
         local_x_range = range(area_array.shape[1])
         coords = list(itertools.product(local_x_range, local_y_range))
+        coords = [i for i in coords if i not in already_searched_coords]
         random.shuffle(coords)
         coords = coords[:int((len(coords) * effectiveness_prob))]
         loc_actual = (self.sailor_actual[0], self.sailor_actual[1])
@@ -162,39 +164,64 @@ def main():
     while True:
         app.calc_search_effectiveness()
         draw_menu(search_num)
+        already_searched_coords = []
         choice = input("Choice: ")
 
         if choice == "0":
             sys.exit()
         elif choice == "1":
-            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
-            results_2, coords2 = app.conduct_search(1, app.sa1, app.sep1)
+            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1,
+                                                    already_searched_coords)
+            already_searched_coords += coords1
+            results_2, coords2 = app.conduct_search(1, app.sa1, app.sep1,
+                                                    already_searched_coords)
+            already_searched_coords += coords2
             app.sep1 = (len(set(coords1 + coords2))) / (len(app.sa1)**2)
             app.sep2 = 0
             app.sep3 = 0
         elif choice == "2":
-            results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2)
-            results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2)
+            results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2,
+                                                    already_searched_coords)
+            already_searched_coords += coords1
+            results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2,
+                                                    already_searched_coords)
+            already_searched_coords += coords2
             app.sep1 = 0
             app.sep2 = (len(set(coords1 + coords2))) / (len(app.sa2)**2)
             app.sep3 = 0
         elif choice == "3":
-            results_1, coords1 = app.conduct_search(3, app.sa3, app.sep3)
-            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
+            results_1, coords1 = app.conduct_search(3, app.sa3, app.sep3,
+                                                    already_searched_coords)
+            already_searched_coords += coords1
+            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3,
+                                                    already_searched_coords)
+            already_searched_coords += coords2
             app.sep1 = 0
             app.sep2 = 0
             app.sep3 = (len(set(coords1 + coords2))) / (len(app.sa3)**2)
         elif choice == "4":
-            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
-            results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2)
+            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1,
+                                                    already_searched_coords)
+            already_searched_coords += coords1
+            results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2,
+                                                    already_searched_coords)
+            already_searched_coords += coords2
             app.sep3 = 0
         elif choice == "5":
-            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
-            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
+            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1,
+                                                    already_searched_coords)
+            already_searched_coords += coords1
+            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3,
+                                                    already_searched_coords)
+            already_searched_coords += coords2
             app.sep2 = 0
         elif choice == "6":
-            results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2)
-            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
+            results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2,
+                                                    already_searched_coords)
+            already_searched_coords += coords1
+            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3,
+                                                    already_searched_coords)
+            already_searched_coords += coords2
             app.sep1 = 0
         elif choice == "7":
             main()
