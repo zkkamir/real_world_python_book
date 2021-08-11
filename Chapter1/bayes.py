@@ -1,3 +1,4 @@
+import os.path
 import sys
 import random
 import itertools
@@ -5,6 +6,7 @@ import numpy as np
 import cv2 as cv
 from numpy.random.mtrand import choice
 
+filepath = os.path.dirname(__file__)
 MAP_FILE = "cape_python.png"
 
 # search areas
@@ -18,7 +20,7 @@ class Search():
 
     def __init__(self, name):
         self.name = name
-        self.img = cv.imread(MAP_FILE, cv.IMREAD_COLOR)
+        self.img = cv.imread(os.path.join(filepath, MAP_FILE), cv.IMREAD_COLOR)
         if self.img is None:
             print("Could not load map file {}".format(MAP_FILE),
                   file=sys.stderr)
