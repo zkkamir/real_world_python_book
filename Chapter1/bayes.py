@@ -169,45 +169,47 @@ def main():
         if len(search_num_list) == 500:
             print(f"Average search num: {sum(search_num_list) / 500}")
             choice = "0"
-        elif app.p1 > app.p2 and app.p1 > app.p3:
-            choice = "1"
-        elif app.p2 > app.p1 and app.p2 > app.p3:
-            choice = "2"
+        elif (app.p1 + app.p2) > (app.p1 + app.p3) and\
+             (app.p1 + app.p2) > (app.p2 + app.p3):
+            choice = "4"
+        elif (app.p1 + app.p3) > (app.p1 + app.p2) and\
+             (app.p1 + app.p3) > (app.p2 + app.p3):
+            choice = "5"
         else:
-            choice = "3"
+            choice = "6"
 
         if choice == "0":
             sys.exit()
-        elif choice == "1":
-            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
-            results_2, coords2 = app.conduct_search(1, app.sa1, app.sep1)
-            app.sep1 = (len(set(coords1 + coords2))) / (len(app.sa1)**2)
-            app.sep2 = 0
-            app.sep3 = 0
-        elif choice == "2":
-            results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2)
-            results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2)
-            app.sep1 = 0
-            app.sep2 = (len(set(coords1 + coords2))) / (len(app.sa2)**2)
-            app.sep3 = 0
-        elif choice == "3":
-            results_1, coords1 = app.conduct_search(3, app.sa3, app.sep3)
-            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
-            app.sep1 = 0
-            app.sep2 = 0
-            app.sep3 = (len(set(coords1 + coords2))) / (len(app.sa3)**2)
-        # elif choice == "4":
+        # elif choice == "1":
         #     results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
-        #     results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2)
-        #     app.sep3 = 0
-        # elif choice == "5":
-        #     results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
-        #     results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
+        #     results_2, coords2 = app.conduct_search(1, app.sa1, app.sep1)
+        #     app.sep1 = (len(set(coords1 + coords2))) / (len(app.sa1)**2)
         #     app.sep2 = 0
-        # elif choice == "6":
+        #     app.sep3 = 0
+        # elif choice == "2":
         #     results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2)
+        #     results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2)
+        #     app.sep1 = 0
+        #     app.sep2 = (len(set(coords1 + coords2))) / (len(app.sa2)**2)
+        #     app.sep3 = 0
+        # elif choice == "3":
+        #     results_1, coords1 = app.conduct_search(3, app.sa3, app.sep3)
         #     results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
         #     app.sep1 = 0
+        #     app.sep2 = 0
+        #     app.sep3 = (len(set(coords1 + coords2))) / (len(app.sa3)**2)
+        elif choice == "4":
+            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
+            results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2)
+            app.sep3 = 0
+        elif choice == "5":
+            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
+            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
+            app.sep2 = 0
+        elif choice == "6":
+            results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2)
+            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
+            app.sep1 = 0
         # elif choice == "7":
         #     main()
 
