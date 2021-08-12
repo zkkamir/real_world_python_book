@@ -46,41 +46,41 @@ class Search():
         self.sep2 = 0
         self.sep3 = 0
 
-    def draw_map(self, last_known):
-        """Display basemap with scale,
-           last known xy location, search areas."""
-        cv.line(self.img, (20, 370), (70, 370), (0, 0, 0), 2)
-        cv.putText(self.img, "0", (8, 370),
-                   cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
-        cv.putText(self.img, "50 Nautical Miles", (71, 370),
-                   cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
+    # def draw_map(self, last_known):
+    #     """Display basemap with scale,
+    #        last known xy location, search areas."""
+    #     cv.line(self.img, (20, 370), (70, 370), (0, 0, 0), 2)
+    #     cv.putText(self.img, "0", (8, 370),
+    #                cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
+    #     cv.putText(self.img, "50 Nautical Miles", (71, 370),
+    #                cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 0))
 
-        cv.rectangle(self.img, (SA1_CORNERS[0], SA1_CORNERS[1]),
-                     (SA1_CORNERS[2], SA1_CORNERS[3]), (0, 0, 0), 1)
-        cv.putText(self.img, "1",
-                   (SA1_CORNERS[0] + 3, SA1_CORNERS[1] + 15),
-                   cv.FONT_HERSHEY_PLAIN, 1, 0)
-        cv.rectangle(self.img, (SA2_CORNERS[0], SA2_CORNERS[1]),
-                     (SA2_CORNERS[2], SA2_CORNERS[3]), (0, 0, 0), 1)
-        cv.putText(self.img, "2",
-                   (SA2_CORNERS[0] + 3, SA2_CORNERS[1] + 15),
-                   cv.FONT_HERSHEY_PLAIN, 1, 0)
-        cv.rectangle(self.img, (SA3_CORNERS[0], SA3_CORNERS[1]),
-                     (SA3_CORNERS[2], SA3_CORNERS[3]), (0, 0, 0), 1)
-        cv.putText(self.img, "3",
-                   (SA3_CORNERS[0] + 3, SA3_CORNERS[1] + 15),
-                   cv.FONT_HERSHEY_PLAIN, 1, 0)
+    #     cv.rectangle(self.img, (SA1_CORNERS[0], SA1_CORNERS[1]),
+    #                  (SA1_CORNERS[2], SA1_CORNERS[3]), (0, 0, 0), 1)
+    #     cv.putText(self.img, "1",
+    #                (SA1_CORNERS[0] + 3, SA1_CORNERS[1] + 15),
+    #                cv.FONT_HERSHEY_PLAIN, 1, 0)
+    #     cv.rectangle(self.img, (SA2_CORNERS[0], SA2_CORNERS[1]),
+    #                  (SA2_CORNERS[2], SA2_CORNERS[3]), (0, 0, 0), 1)
+    #     cv.putText(self.img, "2",
+    #                (SA2_CORNERS[0] + 3, SA2_CORNERS[1] + 15),
+    #                cv.FONT_HERSHEY_PLAIN, 1, 0)
+    #     cv.rectangle(self.img, (SA3_CORNERS[0], SA3_CORNERS[1]),
+    #                  (SA3_CORNERS[2], SA3_CORNERS[3]), (0, 0, 0), 1)
+    #     cv.putText(self.img, "3",
+    #                (SA3_CORNERS[0] + 3, SA3_CORNERS[1] + 15),
+    #                cv.FONT_HERSHEY_PLAIN, 1, 0)
 
-        cv.putText(self.img, "+", (last_known),
-                   cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 255))
-        cv.putText(self.img, "+ = Last Known Position", (274, 355),
-                   cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 255))
-        cv.putText(self.img, "* = Actual Position", (275, 370),
-                   cv.FONT_HERSHEY_PLAIN, 1, (255, 0, 0))
+    #     cv.putText(self.img, "+", (last_known),
+    #                cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 255))
+    #     cv.putText(self.img, "+ = Last Known Position", (274, 355),
+    #                cv.FONT_HERSHEY_PLAIN, 1, (0, 0, 255))
+    #     cv.putText(self.img, "* = Actual Position", (275, 370),
+    #                cv.FONT_HERSHEY_PLAIN, 1, (255, 0, 0))
 
-        cv.imshow("Search Area", self.img)
-        cv.moveWindow("Search Area", 750, 10)
-        cv.waitKey(500)
+    #     cv.imshow("Search Area", self.img)
+    #     cv.moveWindow("Search Area", 750, 10)
+    #     cv.waitKey(500)
 
     def sailor_final_location(self, num_search_areas):
         """Return the actual x,y location of the missing sailor."""
@@ -133,38 +133,48 @@ class Search():
         self.p3 = self.p3 * (1 - self.sep3) / denom
 
 
-def draw_menu(search_num):
-    """Print menu of choices for conducting area searches."""
-    print("\nSearch {}".format(search_num))
-    print(
-        """
-        Choose next areas to search:
-        0 - Quit
-        1 - Search Area 1 twice
-        2 - Search Area 2 twice
-        3 - Search Area 3 twice
-        4 - Search Areas 1 & 2
-        5 - Search Areas 1 & 3
-        6 - Search Areas 2 & 3
-        7 - Start Over
-        """
-    )
+# def draw_menu(search_num):
+#     """Print menu of choices for conducting area searches."""
+#     print("\nSearch {}".format(search_num))
+#     print(
+#         """
+#         Choose next areas to search:
+#         0 - Quit
+#         1 - Search Area 1 twice
+#         2 - Search Area 2 twice
+#         3 - Search Area 3 twice
+#         4 - Search Areas 1 & 2
+#         5 - Search Areas 1 & 3
+#         6 - Search Areas 2 & 3
+#         7 - Start Over
+#         """
+#     )
+search_num_list = []
 
 
 def main():
     app = Search("Cape_Python")
-    app.draw_map(last_known=(160, 290))
+    # app.draw_map(last_known=(160, 290))
     sailor_x, sailor_y = app.sailor_final_location(num_search_areas=3)
-    print("-" * 65)
-    print("\nInitial Target (P) Probabilities:")
-    print("P1 = {:.3f}, P2 = {:.3f}, P3 = {:.3f}"
-          .format(app.p1, app.p2, app.p3))
+    # print("-" * 65)
+    # print("\nInitial Target (P) Probabilities:")
+    # print("P1 = {:.3f}, P2 = {:.3f}, P3 = {:.3f}"
+    #       .format(app.p1, app.p2, app.p3))
     search_num = 1
 
     while True:
         app.calc_search_effectiveness()
-        draw_menu(search_num)
-        choice = input("Choice: ")
+        # draw_menu(search_num)
+        # choice = input("Choice: ")
+        if len(search_num_list) == 500:
+            print(f"Average search num: {sum(search_num_list) / 500}")
+            choice = "0"
+        elif app.p1 > app.p2 and app.p1 > app.p3:
+            choice = "1"
+        elif app.p2 > app.p1 and app.p2 > app.p3:
+            choice = "2"
+        else:
+            choice = "3"
 
         if choice == "0":
             sys.exit()
@@ -186,20 +196,20 @@ def main():
             app.sep1 = 0
             app.sep2 = 0
             app.sep3 = (len(set(coords1 + coords2))) / (len(app.sa3)**2)
-        elif choice == "4":
-            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
-            results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2)
-            app.sep3 = 0
-        elif choice == "5":
-            results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
-            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
-            app.sep2 = 0
-        elif choice == "6":
-            results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2)
-            results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
-            app.sep1 = 0
-        elif choice == "7":
-            main()
+        # elif choice == "4":
+        #     results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
+        #     results_2, coords2 = app.conduct_search(2, app.sa2, app.sep2)
+        #     app.sep3 = 0
+        # elif choice == "5":
+        #     results_1, coords1 = app.conduct_search(1, app.sa1, app.sep1)
+        #     results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
+        #     app.sep2 = 0
+        # elif choice == "6":
+        #     results_1, coords1 = app.conduct_search(2, app.sa2, app.sep2)
+        #     results_2, coords2 = app.conduct_search(3, app.sa3, app.sep3)
+        #     app.sep1 = 0
+        # elif choice == "7":
+        #     main()
 
         else:
             print("\nSorry, but that isn't a valid choice", file=sys.stderr)
@@ -207,24 +217,26 @@ def main():
 
         app.revise_target_probs()  # Use Bayes' rule to update target probs.
 
-        print("\nSearch {} Results 1 = {}"
-              .format(search_num, results_1), file=sys.stderr)
-        print("\nSearch {} Results 2 = {}"
-              .format(search_num, results_2), file=sys.stderr)
-        print("Search {} Effectiveness (E):".format(search_num))
-        print("E1 = {:.3f}, E2 = {:.3f}, E3 = {:.3f}"
-              .format(app.sep1, app.sep2, app.sep3))
+        # print("\nSearch {} Results 1 = {}"
+        #       .format(search_num, results_1), file=sys.stderr)
+        # print("\nSearch {} Results 2 = {}"
+        #       .format(search_num, results_2), file=sys.stderr)
+        # print("Search {} Effectiveness (E):".format(search_num))
+        # print("E1 = {:.3f}, E2 = {:.3f}, E3 = {:.3f}"
+        #       .format(app.sep1, app.sep2, app.sep3))
 
         if results_1 == "Not Found" and results_2 == "Not Found":
-            print("\nNew Target Probabilities (P) for search {}:"
-                  .format(search_num + 1))
-            print("P1 = {:.3f}, P2 = {:.3f}, P3 = {:.3f}"
-                  .format(app.p1, app.p2, app.p3))
+            # print("\nNew Target Probabilities (P) for search {}:"
+            #       .format(search_num + 1))
+            # print("P1 = {:.3f}, P2 = {:.3f}, P3 = {:.3f}"
+            #       .format(app.p1, app.p2, app.p3))
+            pass
         else:
-            cv.circle(app.img, (int(sailor_x), int(sailor_y)),
-                      3, (255, 0, 0), -1)
-            cv.imshow("Search Area", app.img)
-            cv.waitKey(1500)
+            # cv.circle(app.img, (int(sailor_x), int(sailor_y)),
+            #           3, (255, 0, 0), -1)
+            # cv.imshow("Search Area", app.img)
+            # cv.waitKey(1500)
+            search_num_list.append(search_num)
             main()
         search_num += 1
 
