@@ -46,6 +46,13 @@ class Search():
         self.sep2 = 0
         self.sep3 = 0
 
+        self.pod_1_twice = 0
+        self.pod_2_twice = 0
+        self.pod_3_twice = 0
+        self.pod_1_and_2 = 0
+        self.pod_1_and_3 = 0
+        self.pod_2_and_3 = 0
+
     def draw_map(self, last_known):
         """Display basemap with scale,
            last known xy location, search areas."""
@@ -106,9 +113,9 @@ class Search():
 
     def calc_search_effectiveness(self):
         """Set decimal search effectiveness value per search area."""
-        self.sep1 = random.uniform(0.2, 0.9)
-        self.sep2 = random.uniform(0.2, 0.9)
-        self.sep3 = random.uniform(0.2, 0.9)
+        self.sep1 = random.triangular(0, 0.9, self.sep1)
+        self.sep2 = random.triangular(0, 0.9, self.sep2)
+        self.sep3 = random.triangular(0, 0.9, self.sep3)
 
     def conduct_search(self, area_num, area_array, effectiveness_prob):
         """Return search results and list of searched coordinates."""
@@ -131,23 +138,61 @@ class Search():
         self.p1 = self.p1 * (1 - self.sep1) / denom
         self.p2 = self.p2 * (1 - self.sep2) / denom
         self.p3 = self.p3 * (1 - self.sep3) / denom
+    
+    def calc_pod(self):
+        """Calculate the Probability of Detection."""
+        self.pod_1_twice = 1 - ((1 - (self.p1 * self.sep1)) ** 2)
+        self.pod_2_twice = 1 - ((1 - (self.p2 * self.sep2)) ** 2)
+        self.pod_3_twice = 1 - ((1 - (self.p3 * self.sep3)) ** 2)
+        self.pod_1_and_2 = (self.p1 * self.sep1) + (self.p2 + self.sep2)
+        self.pod_1_and_3 = (self.p1 * self.sep1) + (self.p3 + self.sep3)
+        self.pod_2_and_3 = (self.p2 * self.sep2) + (self.p3 + self.sep3)
+        
 
 
-def draw_menu(search_num):
+def draw_menu(
+    search_num,
+    pod_1_twice,
+    pod_2_twice,
+    pod_3_twice,
+    pod_1_and_2,
+    pod_1_and_3,
+    pod_2_and_3
+):
     """Print menu of choices for conducting area searches."""
     print("\nSearch {}".format(search_num))
     print(
         """
         Choose next areas to search:
         0 - Quit
+        
         1 - Search Area 1 twice
+          Probability of detection: {:.3f}
+          
         2 - Search Area 2 twice
+          Probability of detection: {:.3f}
+          
         3 - Search Area 3 twice
+          Probability of detection: {:.3f}
+          
         4 - Search Areas 1 & 2
+          Probability of detection: {:.3f}
+          
         5 - Search Areas 1 & 3
+          Probability of detection: {:.3f}
+          
         6 - Search Areas 2 & 3
+          Probability of detection: {:.3f}
+
         7 - Start Over
-        """
+        """.format(
+            pod_1_twice,
+            pod_2_twice,
+            pod_3_twice,
+            pod_1_and_2,
+            pod_1_and_3,
+            pod_2_and_3
+        )
     )
 
 
@@ -163,7 +208,16 @@ def main():
 
     while True:
         app.calc_search_effectiveness()
-        draw_menu(search_num)
+        app.calc_pod()
+        draw_menu(
+            search_num,
+            app.pod_1_twice,
+            app.pod_2_twice,
+            app.pod_3_twice,
+            app.pod_1_and_2,
+            app.pod_1_and_3,
+            app.pod_2_and_3
+        )
         choice = input("Choice: ")
 
         if choice == "0":
