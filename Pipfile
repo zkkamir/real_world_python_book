@@ -18,6 +18,8 @@ nltk = "*"
 pyqt5 = "*"
 requests = "*"
 beautifulsoup4 = "*"
+python-levenshtein = "*"
+gensim = "==3.8.3"
 
 [dev-packages]
 
