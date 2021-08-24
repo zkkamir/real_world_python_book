@@ -16,6 +16,8 @@ opencv-contrib-python = "*"
 autopep8 = "*"
 nltk = "*"
 pyqt5 = "*"
+requests = "*"
+beautifulsoup4 = "*"
 
 [dev-packages]
 
