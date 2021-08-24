@@ -15,6 +15,7 @@ nose = "*"
 opencv-contrib-python = "*"
 autopep8 = "*"
 nltk = "*"
+pyqt5 = "*"
 
 [dev-packages]
 
