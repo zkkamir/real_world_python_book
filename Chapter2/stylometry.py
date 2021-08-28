@@ -1,9 +1,11 @@
+import os.path
 import nltk
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 
 
 LINES = ["-", ":", "--"] # Line style for plots.
+filepath = os.path.dirname(__file__)
 
 def text_to_string(filename):
     """Read a text file and return a string."""
@@ -126,9 +128,9 @@ def jaccard_test(words_by_author, len_shortes_corpus):
 
 def main():
     strings_by_author = dict()
-    strings_by_author["doyle"] = text_to_string("hound.txt")
-    strings_by_author["wells"] = text_to_string("war.txt")
-    strings_by_author["unknown"] = text_to_string("lost.txt")
+    strings_by_author["doyle"] = text_to_string(os.path.join(filepath, "hound.txt"))
+    strings_by_author["wells"] = text_to_string(os.path.join(filepath, "war.txt"))
+    strings_by_author["unknown"] = text_to_string(os.path.join(filepath, "lost.txt"))
 
     # print(strings_by_author["doyle"][:300])
 
