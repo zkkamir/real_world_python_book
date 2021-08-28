@@ -20,6 +20,8 @@ requests = "*"
 beautifulsoup4 = "*"
 python-levenshtein = "*"
 gensim = "==3.8.3"
+wordcloud = "*"
+pillow = "*"
 
 [dev-packages]
 
