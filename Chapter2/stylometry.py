@@ -4,22 +4,25 @@ from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 
 
-LINES = ["-", ":", "--"] # Line style for plots.
+LINES = ["-", ":", "--"]  # Line style for plots.
 filepath = os.path.dirname(__file__)
+
 
 def text_to_string(filename):
     """Read a text file and return a string."""
     with open(filename, encoding="utf-8", errors="ignore") as infile:
         return infile.read()
 
+
 def make_word_dict(strings_by_author):
     """Return dictionary of tokenized words by corpus by author."""
     words_by_author = dict()
     for author in strings_by_author:
-        tokens = nltk.word_tokenize(strings_by_author[author])        
+        tokens = nltk.word_tokenize(strings_by_author[author])
         words_by_author[author] = ([token.lower() for token in tokens
                                     if token.isalpha()])
     return words_by_author
+
 
 def find_shortest_corpus(words_by_author):
     """Return length of shortest corpus."""
@@ -32,6 +35,7 @@ def find_shortest_corpus(words_by_author):
     # print("length of the shortest corpus = {}\n".
     #       format(len_shortest_corpus))
     return len_shortest_corpus
+
 
 def word_length_test(words_by_author, len_shortest_corpus):
     """Plot word length freq by author,
@@ -51,25 +55,26 @@ def word_length_test(words_by_author, len_shortest_corpus):
     plt.legend()
     # plt.show(block=True) # Uncomment to see plot while coding.
 
+
 def stopwords_test(words_by_author, len_shortest_corpus):
     """Plot stopwords freq by author,
        truncated to shortest corpus length."""
     stopwords_by_author_freq_dist = dict()
     plt.figure(2)
-    stop_words = set(stopwords.words("english")) # Use set for speed.
-    
+    stop_words = set(stopwords.words("english"))  # Use set for speed.
+
     for i, author in enumerate(words_by_author):
         stopwords_by_author = [word for word in words_by_author[author]
                                [:len_shortest_corpus] if word in stop_words]
         stopwords_by_author_freq_dist[author] = nltk.\
-                                                FreqDist(stopwords_by_author)
+            FreqDist(stopwords_by_author)
         stopwords_by_author_freq_dist[author].plot(50,
                                                    label=author,
                                                    linestyle=LINES[i],
-                                                   title=
-                                                   "50 Most Common Stopwords")
+                                                   title="50 Most Common Stopwords")
     plt.legend()
     # plt.show(block=True) # Uncomment to see plot while coding.
+
 
 def parts_of_speech_test(words_by_author, len_shortest_corpus):
     """Plot author use of parts-of-speech such as nouns, verbs, adverbs."""
@@ -85,6 +90,7 @@ def parts_of_speech_test(words_by_author, len_shortest_corpus):
                                              title="Part of Speech")
     plt.legend()
     # plt.show(block=True) # Uncomment to see plot while coding.
+
 
 def vocab_test(words_by_author):
     """Compare author vocabularies using the chi-squared statistical test."""
@@ -103,11 +109,13 @@ def vocab_test(words_by_author):
                 expected_count_author = combined_count * author_proportion
                 chisquared += ((observed_count_author -
                                 expected_count_author)**2 /
-                                expected_count_author)
+                               expected_count_author)
                 chisquared_by_author[author] = chisquared
             print("Chi-squared for {} = {:.1f}".format(author, chisquared))
-    most_likely_author = min(chisquared_by_author, key=chisquared_by_author.get)
+    most_likely_author = min(chisquared_by_author,
+                             key=chisquared_by_author.get)
     print("Most-likely author by vocabulary is {}\n".format(most_likely_author))
+
 
 def jaccard_test(words_by_author, len_shortes_corpus):
     """Calculate Jacard similarity of each known corpus to unknown corpus."""
@@ -126,11 +134,15 @@ def jaccard_test(words_by_author, len_shortes_corpus):
     most_likely_author = max(jaccard_by_author, key=jaccard_by_author.get)
     print("Most-likely author by similarity is {}".format(most_likely_author))
 
+
 def main():
     strings_by_author = dict()
-    strings_by_author["doyle"] = text_to_string(os.path.join(filepath, "hound.txt"))
-    strings_by_author["wells"] = text_to_string(os.path.join(filepath, "war.txt"))
-    strings_by_author["unknown"] = text_to_string(os.path.join(filepath, "lost.txt"))
+    strings_by_author["doyle"] = text_to_string(
+        os.path.join(filepath, "hound.txt"))
+    strings_by_author["wells"] = text_to_string(
+        os.path.join(filepath, "war.txt"))
+    strings_by_author["unknown"] = text_to_string(
+        os.path.join(filepath, "lost.txt"))
 
     # print(strings_by_author["doyle"][:300])
 
@@ -141,6 +153,7 @@ def main():
     parts_of_speech_test(words_by_author, len_shortest_corpus)
     vocab_test(words_by_author)
     jaccard_test(words_by_author, len_shortest_corpus)
+
 
 if __name__ == "__main__":
     main()

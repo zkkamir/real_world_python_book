@@ -6,6 +6,7 @@ import bs4
 import nltk
 from nltk.corpus import stopwords
 
+
 def remove_stop_words(speech_edit):
     """Remove stop words from string and return it."""
     stop_words = set(stopwords.words("english"))
@@ -15,10 +16,12 @@ def remove_stop_words(speech_edit):
             speech_edit_no_stop += word + " "
     return speech_edit_no_stop
 
+
 def get_word_freq(speech_edit_no_stop):
     """Return a dictionary of word frequency in a string."""
     word_freq = nltk.FreqDist(nltk.word_tokenize(speech_edit_no_stop.lower()))
     return word_freq
+
 
 def score_sentences(speech, word_freq, max_words):
     """Return dictionary of sentence scores based on word frequency."""
@@ -34,6 +37,7 @@ def score_sentences(speech, word_freq, max_words):
                     sent_scores[sent] += word_freq[word]
         sent_scores[sent] = sent_scores[sent] / sent_word_count
     return sent_scores
+
 
 def main():
     url = "http://www.analytictech.com/mb021/mlk.htm"
@@ -55,7 +59,7 @@ def main():
             break
         else:
             print("\nInput must be in whole numbers. \n")
-    
+
     speech_edit_no_stop = remove_stop_words(speech_edit)
     word_freq = get_word_freq(speech_edit_no_stop)
     sent_scores = score_sentences(speech, word_freq, max_words)
@@ -65,6 +69,7 @@ def main():
     print("\nSUMMARY:")
     for i in summary:
         print(i[0])
+
 
 if __name__ == "__main__":
     main()
