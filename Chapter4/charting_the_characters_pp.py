@@ -1,5 +1,6 @@
-import os.path
-
+import sys
+import os
+import operator
 from collections import Counter
 import matplotlib.pyplot as plt
 
@@ -8,23 +9,30 @@ FILEPATH = os.path.dirname(__file__)
 
 
 def load_file(infile):
-    """Read and return a text file as a string of lowercase characters."""
+    """Read and return text file as string of lowercase characters."""
     with open(os.path.join(FILEPATH, infile)) as f:
-        loaded_string = f.read().lower()
-    return loaded_string
+        text = f.read().lower()
+    return text
 
 
-str = load_file("lost.txt")
+def main():
+    infile = 'lost.txt'
+    if not os.path.exists(os.path.join(FILEPATH, infile)):
+        print("File {} not found. Terminating.".format(infile),
+              file=sys.stderr)
+        sys.exit(1)
 
-character_count = Counter(str).most_common()
+    text = load_file(infile)
 
-x_axis = []
-y_axis = []
+    # Make bar chart of characters in text and their frequency.
+    char_freq = Counter(text)
+    char_freq_sorted = sorted(char_freq.items(),
+                              key=operator.itemgetter(1), reverse=True)
+    x, y = zip(*char_freq_sorted)  # * unpacks iterable.
+    fig, ax = plt.subplots()
+    ax.bar(x, y)
+    fig.show()
 
-for i in character_count:
-    x_axis.append(i[0])
-    y_axis.append(i[1])
 
-plt.bar(x_axis, y_axis)
-plt.title("A chart of frequency of characters in 'The Lost World'")
-plt.show()
+if __name__ == '__main__':
+    main()
